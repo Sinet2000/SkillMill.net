@@ -1,4 +1,5 @@
 using SkillMill.API.Configuration;
+using SkillMill.Data.EF.Setup;
 
 namespace SkillMill.API;
 
@@ -7,11 +8,11 @@ public static class Program
     public static async Task Main(string[] args)
     {
         var webAppBuilder = WebApplication.CreateBuilder(args);
-        
+
         webAppBuilder.ConfigureServices();
-        
+
         var app = webAppBuilder.Build();
-        app.Configure(webAppBuilder);
+        await app.Configure(webAppBuilder);
         await app.RunAsync();
     }
 
@@ -21,6 +22,11 @@ public static class Program
         var config = builder.Configuration;
 
         services.Configure<CoreAppConfiguration>(config.GetSection(CoreAppConfiguration.SectionName));
+        var appConfiguration = config.GetSection(CoreAppConfiguration.SectionName).Get<CoreAppConfiguration>();
+        ArgumentNullException.ThrowIfNull(appConfiguration);
+
+        var coreDbSetup = new AppDbSetup(appConfiguration.DbConnectionString);
+        coreDbSetup.Configure(services);
 
         services.AddCors(options =>
         {
@@ -38,9 +44,12 @@ public static class Program
         services.AddControllers();
     }
 
-    private static void Configure(this IApplicationBuilder app, WebApplicationBuilder builder)
+    private static async Task Configure(this IApplicationBuilder app, WebApplicationBuilder builder)
     {
         var env = builder.Environment;
+
+        await AppDbSetup.Initialize(app.ApplicationServices);
+
         app.UseCors();
 
         if (env.IsDevelopment())
@@ -52,14 +61,11 @@ public static class Program
 
         app.UseRouting();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
         app.ConfigureSwagger(env);
     }
-    
+
     private static void ConfigureSwagger(this IApplicationBuilder app, IHostEnvironment env)
     {
         if (!env.IsProduction())
@@ -70,7 +76,7 @@ public static class Program
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", typeof(Program).Assembly.GetName().Name);
                 options.RoutePrefix = "swagger";
                 options.DisplayRequestDuration();
-            });   
+            });
         }
     }
 }

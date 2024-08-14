@@ -4,5 +4,5 @@ public record CoreAppConfiguration
 {
     public const string SectionName = "CoreAppConfig";
 
-    public string CoreDbConnectionString { get; init; } = null!;
+    public string DbConnectionString { get; init; } = null!;
 }
