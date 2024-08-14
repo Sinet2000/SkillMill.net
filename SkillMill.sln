@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C3534E54-3380-43A8-80CD-26DCCE844406}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillMill.Application", "src\SkillMill.Application\SkillMill.Application.csproj", "{BA3FAFC9-6B39-4493-AFA2-6AB006E12187}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillMill.API", "src\SkillMill.API\SkillMill.API.csproj", "{1ED0A044-059A-4326-85B6-166E54793D0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillMill.Domain", "src\SkillMill.Domain\SkillMill.Domain.csproj", "{3857DFB9-9C1A-40C5-8893-8B345218F4D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillMill.Data.Dapper", "src\SkillMill.Data.Dapper\SkillMill.Data.Dapper.csproj", "{6BEF681B-2FA8-4837-B222-A5B6A0196667}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillMill.Data.EF", "src\SkillMill.Data.EF\SkillMill.Data.EF.csproj", "{7D0B4423-939E-4785-BA32-115E0AF0DAA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillMill.Common", "src\SkillMill.Common\SkillMill.Common.csproj", "{E0A9074A-2FC8-4D12-AF55-3DB896783E27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA3FAFC9-6B39-4493-AFA2-6AB006E12187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA3FAFC9-6B39-4493-AFA2-6AB006E12187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA3FAFC9-6B39-4493-AFA2-6AB006E12187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA3FAFC9-6B39-4493-AFA2-6AB006E12187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED0A044-059A-4326-85B6-166E54793D0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED0A044-059A-4326-85B6-166E54793D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED0A044-059A-4326-85B6-166E54793D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED0A044-059A-4326-85B6-166E54793D0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3857DFB9-9C1A-40C5-8893-8B345218F4D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3857DFB9-9C1A-40C5-8893-8B345218F4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3857DFB9-9C1A-40C5-8893-8B345218F4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3857DFB9-9C1A-40C5-8893-8B345218F4D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BEF681B-2FA8-4837-B222-A5B6A0196667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BEF681B-2FA8-4837-B222-A5B6A0196667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BEF681B-2FA8-4837-B222-A5B6A0196667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BEF681B-2FA8-4837-B222-A5B6A0196667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D0B4423-939E-4785-BA32-115E0AF0DAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D0B4423-939E-4785-BA32-115E0AF0DAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D0B4423-939E-4785-BA32-115E0AF0DAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D0B4423-939E-4785-BA32-115E0AF0DAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A9074A-2FC8-4D12-AF55-3DB896783E27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0A9074A-2FC8-4D12-AF55-3DB896783E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0A9074A-2FC8-4D12-AF55-3DB896783E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0A9074A-2FC8-4D12-AF55-3DB896783E27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BA3FAFC9-6B39-4493-AFA2-6AB006E12187} = {C3534E54-3380-43A8-80CD-26DCCE844406}
+		{1ED0A044-059A-4326-85B6-166E54793D0A} = {C3534E54-3380-43A8-80CD-26DCCE844406}
+		{3857DFB9-9C1A-40C5-8893-8B345218F4D2} = {C3534E54-3380-43A8-80CD-26DCCE844406}
+		{6BEF681B-2FA8-4837-B222-A5B6A0196667} = {C3534E54-3380-43A8-80CD-26DCCE844406}
+		{7D0B4423-939E-4785-BA32-115E0AF0DAA5} = {C3534E54-3380-43A8-80CD-26DCCE844406}
+		{E0A9074A-2FC8-4D12-AF55-3DB896783E27} = {C3534E54-3380-43A8-80CD-26DCCE844406}
+	EndGlobalSection
+EndGlobal
