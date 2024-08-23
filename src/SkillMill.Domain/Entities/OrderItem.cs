@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SkillMill.Domain.Entities;
 
@@ -13,6 +14,7 @@ public class OrderItem : BaseEntity
 
     public int Quantity { get; private set; }
 
+    [Column(TypeName = "decimal(18,2)")]
     public decimal UnitPrice { get; private set; }
 
     [Range(1, int.MaxValue)]

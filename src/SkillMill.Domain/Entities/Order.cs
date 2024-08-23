@@ -26,4 +26,9 @@ public class Order : BaseEntity
     {
         _orderItems.AddRange(orderItems);
     }
+
+    public void UpdateDate(DateTime newOrderDate)
+    {
+        OrderDate = newOrderDate;
+    }
 }

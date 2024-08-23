@@ -1,24 +1,28 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SkillMill.Data.Common;
 
 namespace SkillMill.Data.EF.Setup;
 
-public class AppDbSetup(string dbConnectionString)
+public class AppDbSetup(IConfiguration configuration)
 {
     public void Configure(IServiceCollection services)
     {
         services.AddDbContext<AppDbContext>(
             options =>
                 options.UseSqlServer(
-                    dbConnectionString,
-                    sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(10);
-                        sqlOptions.CommandTimeout(300);
-                        sqlOptions.MinBatchSize(1);
-                        sqlOptions.MaxBatchSize(100);
-                    }).EnableSensitiveDataLogging(false),
+                        configuration["CoreAppConfig:DbConnectionString"],
+                        sqlOptions =>
+                        {
+                            sqlOptions.EnableRetryOnFailure(10);
+                            sqlOptions.CommandTimeout(300);
+                            sqlOptions.MinBatchSize(1);
+                            sqlOptions.MaxBatchSize(100);
+                        })
+                    .EnableSensitiveDataLogging(false)
+                    .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information),
             ServiceLifetime.Transient);
 
         services.AddScoped<SeedApplier>();
@@ -26,22 +30,25 @@ public class AppDbSetup(string dbConnectionString)
         EFSeedSetup.Configure(services);
     }
 
-    public static async Task Initialize(IServiceProvider hostServices, bool ensureDeleted = false)
+    public static void Initialize(IServiceProvider hostServices, bool ensureDeleted = false)
     {
-        using (var scope = hostServices.CreateScope())
+        Task.Run(async () =>
         {
-            var services = scope.ServiceProvider;
-            var dbContext = services.GetRequiredService<AppDbContext>();
-
-            if (ensureDeleted)
+            using (var scope = hostServices.CreateScope())
             {
-                await dbContext.Database.EnsureDeletedAsync();
+                var services = scope.ServiceProvider;
+                var dbContext = services.GetRequiredService<AppDbContext>();
+
+                if (ensureDeleted)
+                {
+                    await dbContext.Database.EnsureDeletedAsync();
+                }
+
+                await dbContext.Database.MigrateAsync();
+
+                var seedApplier = services.GetRequiredService<SeedApplier>();
+                await seedApplier.ApplySeedAsync<CustomerEfDataSeed>();
             }
-
-            await dbContext.Database.EnsureCreatedAsync();
-
-            var seedApplier = services.GetRequiredService<SeedApplier>();
-            await seedApplier.ApplySeedAsync<CustomerEFDataSeed>();
-        }
+        }).GetAwaiter().GetResult();
     }
 }

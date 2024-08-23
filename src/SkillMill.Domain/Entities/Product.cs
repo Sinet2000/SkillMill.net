@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using SkillMill.Common.Attributes;
 
 namespace SkillMill.Domain.Entities;
@@ -16,7 +17,7 @@ public class Product : BaseEntity
     [NameLength]
     public string Name { get; private set; } = null!;
 
-    [PriceRange]
+    [Column(TypeName = "decimal(18,2)")]
     public decimal Price { get; private set; }
 
     public IEnumerable<OrderItem> OrderItems => _orderItems.AsReadOnly();

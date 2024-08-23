@@ -3,7 +3,7 @@ using SkillMill.Data.Common.Fakers;
 
 namespace SkillMill.Data.EF;
 
-public class CustomerEFDataSeed(AppDbContext dbContext, CustomerFaker faker) : ISeedApplier
+public class CustomerEfDataSeed(AppDbContext dbContext, CustomerFaker faker) : ISeedApplier
 {
     private const int CustomersCountToGenerate = 300;
 

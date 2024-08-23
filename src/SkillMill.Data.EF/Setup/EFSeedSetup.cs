@@ -24,6 +24,6 @@ public class EFSeedSetup
     private static void AddSeeds(IServiceCollection services)
     {
         services
-            .AddScoped<CustomerEFDataSeed>();
+            .AddScoped<CustomerEfDataSeed>();
     }
 }
