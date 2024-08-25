@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SkillMill.Data.Common.Interfaces;
 
 namespace SkillMill.Data.Common;
 

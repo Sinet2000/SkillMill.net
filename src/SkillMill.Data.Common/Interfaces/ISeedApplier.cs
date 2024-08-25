@@ -1,4 +1,4 @@
-namespace SkillMill.Data.Common;
+namespace SkillMill.Data.Common.Interfaces;
 
 public interface ISeedApplier
 {

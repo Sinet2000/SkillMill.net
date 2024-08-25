@@ -1,16 +1,16 @@
-using Gridify;
-using SkillMill.Common;
+using Sieve.Models;
 
 namespace SkillMill.Data.Common.Models;
 
-public class GridifyPagedResult<T>
+public class PagedResult<T>
     where T : class
 {
-    public GridifyPagedResult(IGridifyQuery query, int totalCount)
+    public PagedResult(SieveModel request, int totalCount)
     {
-        query.PageSize = query.PageSize.HasValue() ? query.PageSize : DataConst.DefaultPageSize;
-        PageSize = query.PageSize;
-        OrderBy = query.OrderBy ?? string.Empty;
+        request.PageSize ??= DataConst.DefaultPageSize;
+
+        PageSize = request.PageSize.Value;
+        OrderBy = request.Sorts;
         TotalCount = totalCount;
         TotalPagesCount = (int)Math.Ceiling((double)TotalCount / PageSize);
     }

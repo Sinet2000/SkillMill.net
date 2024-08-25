@@ -1,9 +1,5 @@
-using AutoMapper;
-using SkillMill.Domain.Entities;
-
 namespace SkillMill.Application.Customers.Dtos;
 
-[AutoMap(typeof(Customer))]
 public record CustomerDetailsDto
 {
     public int Id { get; init; }

@@ -1,11 +1,14 @@
 using System.Reflection;
+using Mapster;
+using MapsterMapper;
 using Sieve.Models;
 using Sieve.Services;
 using SkillMill.API.Configuration;
 using SkillMill.Application;
-using SkillMill.Application.Problems;
-using SkillMill.Data.Common;
-using SkillMill.Data.Common.Models;
+using SkillMill.Application.Customers;
+using SkillMill.Data.Common.Interfaces;
+using SkillMill.Data.EF;
+using SkillMill.Data.EF.Interfaces;
 using SkillMill.Data.EF.Setup;
 
 namespace SkillMill.API;
@@ -29,11 +32,14 @@ public class Startup(IConfiguration configuration)
 
         // https://github.com/Biarity/Sieve?tab=readme-ov-file
         services.Configure<SieveOptions>(configuration.GetSection("Sieve"));
-        services.AddScoped<SieveProcessor>();
+        services.AddScoped<ISieveProcessor, SieveProcessor>();
         services.AddScoped<ISieveCustomFilterMethods, SieveCustomFilterMethods>();
 
         var coreDbSetup = new AppDbSetup(configuration);
         coreDbSetup.Configure(services);
+
+        services.AddScoped<IDataSearchQuery<AppDbContext>, DataSearchableDbContext<AppDbContext>>();
+        services.AddScoped<IUpdateableDbContext<AppDbContext>, UpdateableDbContext<AppDbContext>>();
 
         services.AddCors(options =>
         {
@@ -50,13 +56,11 @@ public class Startup(IConfiguration configuration)
 
         services.AddControllers();
 
-        services.AddAutoMapper(
-            typeof(CartesianExplosionProblem).Assembly,
-            typeof(DataConst).Assembly);
+        ConfigureMapster(services);
 
-        // services
-        //     .AddTransient<ITestService, TestService>()
-        //     ;
+        services
+            .AddTransient<ICustomerService, CustomerService>()
+            ;
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -86,5 +90,21 @@ public class Startup(IConfiguration configuration)
         app.UseRouting();
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+    }
+
+    private static void ConfigureMapster(IServiceCollection services)
+    {
+        var mapsterConfigTypes = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => typeof(IMapsterConfig).IsAssignableFrom(t) && t.IsClass);
+
+        foreach (var configType in mapsterConfigTypes)
+        {
+            var configInstance = Activator.CreateInstance(configType) as IMapsterConfig;
+            configInstance?.Configure();
+        }
+
+        services.AddSingleton(TypeAdapterConfig.GlobalSettings);
+        services.AddScoped<IMapper, ServiceMapper>();
     }
 }

@@ -1,12 +1,13 @@
 using Mapster;
 using SkillMill.Application.Customers.Dtos;
+using SkillMill.Data.Common.Interfaces;
 using SkillMill.Domain.Entities;
 
 namespace SkillMill.Application.Customers;
 
-public class CustomerMapsterConfig
+public class CustomerMapsterConfig : IMapsterConfig
 {
-    public static void Configure()
+    public void Configure()
     {
         TypeAdapterConfig<Customer, CustomerDetailsDto>.NewConfig();
         TypeAdapterConfig<Customer, CustomerDto>.NewConfig();

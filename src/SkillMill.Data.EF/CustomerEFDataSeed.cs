@@ -1,5 +1,5 @@
-using SkillMill.Data.Common;
 using SkillMill.Data.Common.Fakers;
+using SkillMill.Data.Common.Interfaces;
 
 namespace SkillMill.Data.EF;
 

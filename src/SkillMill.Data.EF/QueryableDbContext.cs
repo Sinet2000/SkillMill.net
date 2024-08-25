@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using AutoMapper;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using SkillMill.Common.Exceptions;
 using SkillMill.Data.EF.Extensions;
