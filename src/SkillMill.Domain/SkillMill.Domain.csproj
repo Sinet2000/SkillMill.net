@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SkillMill.Common\SkillMill.Common.csproj" />
+  </ItemGroup>
+
 </Project>
