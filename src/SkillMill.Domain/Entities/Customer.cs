@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using Ardalis.GuardClauses;
+using Sieve.Attributes;
 using SkillMill.Common.Attributes;
 
 namespace SkillMill.Domain.Entities;
 
-public class Customer : BaseEntity
+public class Customer : BaseEntity, ICloneable
 {
     /// <summary>
     /// CTOR to init Bogus.Faker.
@@ -16,9 +17,11 @@ public class Customer : BaseEntity
     private readonly List<Order> _orders = [];
 
     [NameLength]
+    [Sieve(CanFilter = true, CanSort = true)]
     public string Name { get; private set; } = null!;
 
     [EmailLength]
+    [Sieve(CanFilter = true, CanSort = true)]
     public string Email { get; private set; } = null!;
 
     [Timestamp]
@@ -40,5 +43,13 @@ public class Customer : BaseEntity
     public void UpdateEmail(string email)
     {
         Email = Guard.Against.NullOrEmpty(email);
+    }
+    
+    public object Clone()
+    {
+        var clone = (Customer)MemberwiseClone();
+        clone.SetOrders(clone.Orders.Select(p => (Order)p.Clone()).ToList());
+
+        return clone;
     }
 }

@@ -5,7 +5,7 @@ namespace SkillMill.Data.EF;
 
 public class CustomerEfDataSeed(AppDbContext dbContext, CustomerFaker faker) : ISeedApplier
 {
-    private const int CustomersCountToGenerate = 300;
+    private const int CustomersCountToGenerate = 1500;
 
     public async Task ApplyAsync()
     {

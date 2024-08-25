@@ -1,7 +1,10 @@
-﻿namespace SkillMill.Domain;
+﻿using Sieve.Attributes;
 
-public abstract class BaseEntity : IEntity
+namespace SkillMill.Domain;
+
+public abstract class BaseEntity : IBaseEntity
 {
+    [Sieve(CanSort = true)]
     public virtual int Id { get; init; }
 
     public static bool operator ==(BaseEntity? a, BaseEntity? b)
@@ -60,7 +63,7 @@ public abstract class BaseEntity : IEntity
     }
 }
 
-public interface IEntity
+public interface IBaseEntity
 {
     int Id { get; init; }
 }

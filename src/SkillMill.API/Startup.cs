@@ -1,4 +1,11 @@
+using System.Reflection;
+using Sieve.Models;
+using Sieve.Services;
 using SkillMill.API.Configuration;
+using SkillMill.Application;
+using SkillMill.Application.Problems;
+using SkillMill.Data.Common;
+using SkillMill.Data.Common.Models;
 using SkillMill.Data.EF.Setup;
 
 namespace SkillMill.API;
@@ -20,6 +27,11 @@ public class Startup(IConfiguration configuration)
         var appConfiguration = configuration.GetSection(CoreAppConfiguration.SectionName).Get<CoreAppConfiguration>();
         ArgumentNullException.ThrowIfNull(appConfiguration);
 
+        // https://github.com/Biarity/Sieve?tab=readme-ov-file
+        services.Configure<SieveOptions>(configuration.GetSection("Sieve"));
+        services.AddScoped<SieveProcessor>();
+        services.AddScoped<ISieveCustomFilterMethods, SieveCustomFilterMethods>();
+
         var coreDbSetup = new AppDbSetup(configuration);
         coreDbSetup.Configure(services);
 
@@ -38,14 +50,18 @@ public class Startup(IConfiguration configuration)
 
         services.AddControllers();
 
+        services.AddAutoMapper(
+            typeof(CartesianExplosionProblem).Assembly,
+            typeof(DataConst).Assembly);
+
         // services
-        //     .AddTransient<IService, Service>()
+        //     .AddTransient<ITestService, TestService>()
         //     ;
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        AppDbSetup.Initialize(app.ApplicationServices, false);
+        AppDbSetup.Initialize(app.ApplicationServices, ensureDeleted: false);
 
         app.UseCors();
 

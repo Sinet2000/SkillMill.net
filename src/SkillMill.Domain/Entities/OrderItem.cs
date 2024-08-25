@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SkillMill.Domain.Entities;
 
-public class OrderItem : BaseEntity
+public class OrderItem : BaseEntity, ICloneable
 {
     /// <summary>
     /// CTOR to init Bogus.Faker.
@@ -30,5 +30,13 @@ public class OrderItem : BaseEntity
     public void SetProduct(Product product)
     {
         Product = product;
+    }
+
+    public object Clone()
+    {
+        var clone = (OrderItem)MemberwiseClone();
+        clone.SetProduct((Product)clone.Product.Clone());
+
+        return clone;
     }
 }

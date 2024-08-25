@@ -19,4 +19,8 @@
     <ProjectReference Include="..\SkillMill.Application\SkillMill.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BenchmarkDotNet.Artifacts\" />
+  </ItemGroup>
+
 </Project>

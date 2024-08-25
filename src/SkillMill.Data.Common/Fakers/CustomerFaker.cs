@@ -13,7 +13,7 @@ public class CustomerFaker(OrderFaker orderFaker) : BaseBogusFaker<Customer, Cus
         ruleSet.RuleFor(p => p.Email, f => f.Internet.Email());
         ruleSet.FinishWith((f, c) =>
         {
-            c.AddOrders(orderFaker.GenerateBetween(1, 3).ToList());
+            c.AddOrders(orderFaker.GenerateBetween(1, 5).ToList());
         });
     }
 }
